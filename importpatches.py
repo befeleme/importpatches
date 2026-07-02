@@ -11,6 +11,7 @@ import tempfile
 import shutil
 
 import click  # dnf install python3-click
+from rpmautospec import specfile_uses_rpmautospec, calculate_release
 
 
 REPO_KEY = 'importpatches.upstream'
@@ -341,12 +342,15 @@ def main(spec, repo, base, head, python_version):
             click.secho(f'Assuming --base={base}', fg='yellow')
 
         if head == None:
-            release = run(
-                'rpm',
-                '--undefine=dist',
-                '--queryformat=%{release}\n',
-                '--specfile', str(spec),
-            ).stdout.splitlines()[0]
+            if specfile_uses_rpmautospec(spec):
+                release = calculate_release(spec, complete_release=False)
+            else:
+                release = run(
+                    'rpm',
+                    '--undefine=dist',
+                    '--queryformat=%{release}\n',
+                    '--specfile', str(spec),
+                ).stdout.splitlines()[0]
             upstream_version = base.lstrip('v')
             head = f'fedora-{upstream_version}-{release}'
             click.secho(f'Assuming --head={head}', fg='yellow')

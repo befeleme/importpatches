@@ -9,6 +9,7 @@ import tempfile
 import os
 
 import click  # dnf install python3-click
+from rpmautospec import specfile_uses_rpmautospec, calculate_release
 
 
 REPO_KEY = 'importpatches.upstream'
@@ -187,17 +188,20 @@ def main(spec, repo, base, branch, python_version, release, tag):
             click.secho(f'Assuming --base={base}', fg='yellow')
 
         if release == None:
-            with spec.open() as f:
-                for line in f:
-                    line = line.strip()
-                    if line.startswith('Release:'):
-                        release = re.search(r"[0-9]+", line).group()
-                        break
-                else:
-                    raise click.UsageError(
-                        "Release not found in spec; check " +
-                        "logic in the script or specify --release explicitly."
-                    )
+            if specfile_uses_rpmautospec(spec):
+                release = calculate_release(spec, complete_release=False)
+            else:
+                with spec.open() as f:
+                    for line in f:
+                        line = line.strip()
+                        if line.startswith('Release:'):
+                            release = re.search(r"[0-9]+", line).group()
+                            break
+                    else:
+                        raise click.UsageError(
+                            "Release not found in spec; check " +
+                            "logic in the script or specify --release explicitly."
+                        )
             click.secho(f'Assuming --release={release}', fg='yellow')
 
         with spec.open() as f:
