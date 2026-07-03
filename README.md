@@ -17,6 +17,12 @@ conventions.)
 [patch registry]: https://fedoraproject.org/wiki/SIGs/Python/PythonPatches
 
 
+## Dependencies
+
+- [click](https://pypi.org/project/click/) (`dnf install python3-click`)
+- [rpmautospec](https://docs.pagure.org/rpmautospec/) (`dnf install python3-rpmautospec`)
+
+
 ## Setup
 
 Add the script to your `$PATH`, for example:
@@ -44,6 +50,15 @@ The script adds Git hash IDs to the spec file.
 These are hashes of the patch content, ignoring tings like context lines and
 comments.
 When one of these changes, pay special atttention to the patch diff.
+
+
+## `%autorelease` support
+
+Spec files using `%autorelease` are supported.
+When `%autorelease` is detected, the release number is calculated
+via `rpmautospec.calculate_release()` instead of parsing it from the spec
+or querying `rpm`.
+
 
 ## License
 
