@@ -5,6 +5,7 @@ A command to update Fedora Python dist-git spec & patches from a Git repository
 Meant to be used with a local clone of [fedora-python/cpython]
 which includes tags like `vX.Y.Z` (upstream releases) and branches
 like `fedora-X.Y` (`vX.Y.Z` + commits for individual patches).
+The script assumes that your local clone is named `fedora-python`.
 
 The summary lines of patch commits must start with `NNNNN: `, where NNNNN is
 the patch number (registered in the [patch registry]).
@@ -25,11 +26,12 @@ conventions.)
 
 ## Setup
 
-Add the script to your `$PATH`, for example:
+Add the scripts to your `$PATH`, for example:
 
     ln -s $PWD/importpatches.py ~/.local/bin/importpatches
+    ln -s $PWD/exportpatches.py ~/.local/bin/exportpatches
 
-The script needs to know where your local clone of `fedora-python/cpython` is,
+The scripts need to know where your local clone of `fedora-python/cpython` is,
 and uses Git configuration as a default.
 
 In your clone of dist-git, run `git config importpatches.upstream .../cpython`.
@@ -40,7 +42,7 @@ to avoid the need to set this in all dist-git clones of Pythons.
 
 ## Usage
 
-Run `importpatches.py` without arguments in your clone of dist-git.
+Run `importpatches.py`/`exportpatches.py` without arguments in your clone of dist-git.
 If the defaults don't work for you, run with `--help` to see the options.
 
 
