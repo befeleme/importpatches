@@ -46,6 +46,32 @@ Run `importpatches.py`/`exportpatches.py` without arguments in your clone of dis
 If the defaults don't work for you, run with `--help` to see the options.
 
 
+## What it does
+
+### importpatches
+
+importpatches takes commits between a base tag and head tag
+in the [fedora-python/cpython] clone and turns them into patch files
+plus updated spec comments in the current dist-git checkout.
+Each commit is formatted into a *.patch file (named NNNNN-... where possible)
+and its Git patch-id is written into the spec comment above
+the PatchNNNNN: line, along with the commit message body.
+It replaces the whole patches section between the
+`(Patches taken from github.com/fedora-python/cpython)` and
+`(New patches go here ^^^)` markers, removing old patch files and moving
+the new ones into place.
+
+
+### exportpatches
+
+exportpatches is an inverse of importpatches: it takes patches listed
+in the dist-git spec and applies them onto a local clone of [fedora-python/cpython],
+producing the fedora-X.Y branch from the upstream vX.Y.Z tag.
+Each patch becomes one commit, with the summary line prefixed by its patch
+number (NNNNN: ) as required by the patch registry.
+It then tags the result and pushes the branch and tag to the fedora remote.
+
+
 ## Git hash IDs
 
 The importpatches script adds Git hash IDs to the spec file.
