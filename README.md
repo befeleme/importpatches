@@ -5,7 +5,7 @@ A command to update Fedora Python dist-git spec & patches from a Git repository
 Meant to be used with a local clone of [fedora-python/cpython]
 which includes tags like `vX.Y.Z` (upstream releases) and branches
 like `fedora-X.Y` (`vX.Y.Z` + commits for individual patches).
-The script assumes that your local clone is named `fedora-python`.
+The script assumes that the remote is named `fedora-python`.
 
 The summary lines of patch commits must start with `NNNNN: `, where NNNNN is
 the patch number (registered in the [patch registry]).
