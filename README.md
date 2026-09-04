@@ -1,11 +1,11 @@
-# importpatches.py
+# importpatches.py and exportpatches.py
 
-A command to update Fedora Python dist-git spec & patches from a Git repository
+Commands to update Fedora Python dist-git spec & patches from/to a Git repository
 
 Meant to be used with a local clone of [fedora-python/cpython]
 which includes tags like `vX.Y.Z` (upstream releases) and branches
 like `fedora-X.Y` (`vX.Y.Z` + commits for individual patches).
-The script assumes that the remote is named `fedora-python`.
+The exportpatches script assumes that the remote is named `fedora-python`.
 
 The summary lines of patch commits must start with `NNNNN: `, where NNNNN is
 the patch number (registered in the [patch registry]).
@@ -48,7 +48,7 @@ If the defaults don't work for you, run with `--help` to see the options.
 
 ## Git hash IDs
 
-The script adds Git hash IDs to the spec file.
+The importpatches script adds Git hash IDs to the spec file.
 These are hashes of the patch content, ignoring tings like context lines and
 comments.
 When one of these changes, pay special atttention to the patch diff.
